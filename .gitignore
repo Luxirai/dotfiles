@@ -1,0 +1,21 @@
+# Ignore everything
+*
+
+# Don't ignore these folders and their contents
+!waybar/
+!waybar/**
+!kitty/
+!kitty/**
+!hypr/
+!hypr/**
+!zsh
+!zsh/**
+
+# Don't ignore .gitignore itself
+!.gitignore
+
+# Keep machine-local / private overrides out of the repo
+zsh/*.local.zsh
+
+# Don't track editor/tool backup files
+kitty/*.bak
