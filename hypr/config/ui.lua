@@ -2,21 +2,21 @@ hl.config({ general = { gaps_in = 5 } })
 hl.config({ general = { gaps_out = 10 } })
 hl.config({ general = { border_size = 2 } })
 hl.config({
-    general = {
-        col = {
-            active_border = {
-                colors = { "rgba(E8364Fee)", "rgba(F28A2Eee)" },
-                angle = 45,
-            },
-        },
-    },
+	general = {
+		col = {
+			active_border = {
+				colors = { "rgba(E8364Fee)", "rgba(F28A2Eee)" },
+				angle = 45,
+			},
+		},
+	},
 })
 hl.config({ general = { col = { inactive_border = "rgba(2A2E3Daa)" } } })
 hl.config({ general = { resize_on_border = true } })
 hl.config({ general = { allow_tearing = false } })
 hl.config({ general = { layout = "dwindle" } })
 
-hl.config({ decoration = { rounding = 10 } })
+hl.config({ decoration = { rounding = 5 } })
 hl.config({ decoration = { rounding_power = 2 } })
 hl.config({ decoration = { active_opacity = 1.0 } })
 hl.config({ decoration = { inactive_opacity = 1 } })
@@ -25,14 +25,23 @@ hl.config({ decoration = { shadow = { range = 4 } } })
 hl.config({ decoration = { shadow = { render_power = 3 } } })
 hl.config({ decoration = { shadow = { color = "rgba(1a1a1aee)" } } })
 hl.config({ decoration = { blur = { enabled = true } } })
-hl.config({ decoration = { blur = { size = 3 } } })
-hl.config({ decoration = { blur = { passes = 2 } } })
+hl.config({ decoration = { blur = { size = 4 } } })
+hl.config({ decoration = { blur = { passes = 4 } } })
 hl.config({ decoration = { blur = { vibrancy = 0.1696 } } })
 
-hl.layer_rule({ blur = true, match = { namespace = "waybar" } })
-hl.layer_rule({ ignore_alpha = 0, match = { namespace = "waybar" } })
-hl.layer_rule({ blur = true, match = { namespace = "vicinae" } })
-hl.layer_rule({ ignore_alpha = 0, match = { namespace = "vicinae" } })
+hl.window_rule({
+	match = { class = "dev.noctalia.Noctalia" },
+	float = true,
+	size = { 1080, 920 },
+})
+hl.layer_rule({
+	name = "noctalia",
+	match = { namespace = "^noctalia-(bar-.+|notification|dock|panel|attached-panel|osd|window-switcher)$" },
+	no_anim = true,
+	ignore_alpha = 0.5,
+	blur = true,
+	blur_popups = true,
+})
 
 hl.config({ animations = { enabled = true } })
 
@@ -58,7 +67,7 @@ hl.animation({ leaf = "fadeLayersOut", enabled = true, speed = 1.39, bezier = "a
 hl.animation({ leaf = "workspaces", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "workspacesIn", enabled = true, speed = 1.21, bezier = "almostLinear", style = "fade" })
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
+hl.animation({ leaf = "zoomFactor", enabled = true, speed = 9, bezier = "quick" })
 
 hl.config({ dwindle = { preserve_split = true } })
 hl.config({ master = { new_status = "master" } })

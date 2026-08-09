@@ -6,7 +6,7 @@ export MANROFFOPT="-c"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # ── Replace ls with eza ──
-alias ls='eza -al --color=always --group-directories-first --icons=auto'
+alias ls='eza -lah --color=always --group-directories-first --icons=auto'
 alias la='eza -a --color=always --group-directories-first --icons=auto'
 alias ll='eza -l --color=always --group-directories-first --icons=auto'
 alias lt='eza -aT --color=always --group-directories-first --icons=auto'

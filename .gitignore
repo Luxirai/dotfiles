@@ -10,6 +10,8 @@
 !hypr/**
 !zsh
 !zsh/**
+!noctalia
+!noctalia/**
 
 # Don't ignore .gitignore itself
 !.gitignore
