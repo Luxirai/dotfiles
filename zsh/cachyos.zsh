@@ -5,13 +5,6 @@
 export MANROFFOPT="-c"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
-# ── Replace ls with eza ──
-alias ls='eza -lah --color=always --group-directories-first --icons=auto'
-alias la='eza -a --color=always --group-directories-first --icons=auto'
-alias ll='eza -l --color=always --group-directories-first --icons=auto'
-alias lt='eza -aT --color=always --group-directories-first --icons=auto'
-alias l.="eza -a | grep -e '^\.'"
-
 # ── Common use ──
 alias grubup="sudo grub-mkconfig -o /boot/grub/grub.cfg"
 alias fixpacman="sudo rm /var/lib/pacman/db.lck"

@@ -11,3 +11,10 @@ hl.device({
     name = "logitech-usb-receiver-mouse",
     sensitivity = -0.5,
 })
+
+-- Keep pen input on the Samsung DisplayPort screen, not the combined desktop.
+hl.device({
+    name = "wacom-intuos-m-pen",
+    output = "DP-2",
+    relative_input = false,
+})

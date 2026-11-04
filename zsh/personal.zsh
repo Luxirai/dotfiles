@@ -14,6 +14,7 @@ alias vi=nvim
 alias gputop=nvtop
 alias shell="herdr session attach shell"
 alias code="herdr session attach code"
+alias wii="whatisit"
 
 function record() {
   wl-screenrec --audio --codec av1 --low-power=off --no-damage -v -f ~/recordings/"${1:-recording}-$(date +%Y-%m-%d-%H-%M).mp4"
