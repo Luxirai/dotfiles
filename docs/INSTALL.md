@@ -4,11 +4,13 @@ This guide targets an **HP ZBook Firefly 15 G8 with 32 GB RAM and NVIDIA T500**,
 
 This model family has Intel 11th-generation processors and was sold with different displays, including 1080p and 4K panels. It typically has Intel integrated graphics alongside the T500, but check your exact configuration and display wiring. The 32 GB of RAM does not require a special Hyprland setting; avoid changing swap, zram or hibernation settings solely based on RAM size.
 
+All terminal commands in this guide are written for **Fish**. Run them in a Fish terminal; the Lua and Zsh examples are configuration-file contents, not Fish commands. You do not need to remove Fish.
+
 ## 1. Prepare and back up
 
 1. Update the whole system, not individual packages:
 
-   ```sh
+   ```fish
    sudo pacman -Syu
    reboot
    ```
@@ -16,7 +18,7 @@ This model family has Intel 11th-generation processors and was sold with differe
 2. Log back in. Keep a working desktop session or TTY available (normally Ctrl+Alt+F3). You can restore your old configs from the backup below. Don't use `sudo` to install files into your home directory.
 3. Clone the repository or use your existing checkout:
 
-   ```sh
+   ```fish
    sudo pacman -S --needed git
    git clone https://github.com/Luxirai/dotfiles.git ~/dotfiles
    cd ~/dotfiles
@@ -25,14 +27,15 @@ This model family has Intel 11th-generation processors and was sold with differe
    If you already cloned it elsewhere, `cd` to that directory instead. The commands below assume your current directory is the checkout.
 4. Back up existing configurations **before** replacing them. This copies rather than deletes your originals:
 
-   ```sh
-   backup="$HOME/dotfiles-backup-$(date +%Y%m%d-%H%M%S)"
+   ```fish
+   set -g backup "$HOME/dotfiles-backup-"(date +%Y%m%d-%H%M%S)
    mkdir -p "$backup" "$HOME/.config"
-   for name in hypr noctalia kitty waybar; do
-     if [ -e "$HOME/.config/$name" ] || [ -L "$HOME/.config/$name" ]; then
+   for name in hypr noctalia kitty waybar
+     if test -e "$HOME/.config/$name"; or test -L "$HOME/.config/$name"
        cp -a "$HOME/.config/$name" "$backup/"
-     fi
-   done
+       or echo "Backup failed for $name; stop and investigate before continuing"
+     end
+   end
    echo "Backup: $backup"
    ```
 
@@ -42,7 +45,7 @@ This model family has Intel 11th-generation processors and was sold with differe
 
 CachyOS normally installs NVIDIA drivers during setup. **Do not install a second conflicting driver or blindly switch drivers.** T500 laptops can have an Intel or AMD iGPU as well as the NVIDIA GPU; panel wiring and the active render GPU vary by laptop.
 
-```sh
+```fish
 lspci -k | grep -A3 -E 'VGA|3D|Display'
 nvidia-smi
 uname -r
@@ -58,7 +61,7 @@ The T500 is a Turing-generation GPU; driver module and firmware support depends 
 
 On CachyOS/Arch, install the following from your enabled repositories:
 
-```sh
+```fish
 sudo pacman -S --needed hyprland noctalia kitty thunar hyprshot waybar \
   xdg-desktop-portal xdg-desktop-portal-hyprland xdg-desktop-portal-gtk \
   pipewire pipewire-pulse wireplumber pavucontrol \
@@ -72,7 +75,7 @@ If pacman reports an unavailable package, check `pacman -Ss <name>` and the curr
 
 Enable system services as needed (NetworkManager may already be active):
 
-```sh
+```fish
 sudo systemctl enable --now NetworkManager.service
 sudo systemctl enable --now bluetooth.service  # optional
 ```
@@ -83,16 +86,16 @@ Do not enable multiple competing network managers. PipeWire/WirePlumber and port
 
 These are **copies**, so later changes to the checkout do not automatically propagate. This deliberately replaces the four existing config directories after the backup; inspect `$backup` first.
 
-```sh
-for name in hypr noctalia kitty waybar; do
+```fish
+for name in hypr noctalia kitty waybar
   rm -rf "$HOME/.config/$name"
   cp -a "$PWD/$name" "$HOME/.config/$name"
-done
+end
 ```
 
 If running this in a new shell, repeat `cd ~/dotfiles` (or your actual checkout) first. `hypr/hyprpaper.conf` is a legacy optional file and is not started: leave wallpaper management to Noctalia. `waybar/modules.json` is a legacy file and is not included by the active `config.jsonc`.
 
-The `zsh/` files are optional personal shell snippets, **not** a complete `.zshrc`. Review them before sourcing; they include personal tools, SDK paths and aliases that require additional programs. To use them, append the following to your existing `~/.zshrc` after changing the path to the actual checkout:
+The `zsh/` files are optional personal shell snippets, **not** a complete `.zshrc`. They are not compatible with Fish; do not source them in Fish. If you separately use Zsh, review them before sourcing; they include personal tools, SDK paths and aliases that require additional programs. To use them, append the following to your existing `~/.zshrc` after changing the path to the actual checkout:
 
 ```zsh
 source "$HOME/dotfiles/zsh/cachyos.zsh"
@@ -119,9 +122,11 @@ Do not install unrelated applications merely to satisfy optional aliases. The al
 
 Noctalia merges all top-level `~/.config/noctalia/*.toml` alphabetically, then its GUI-managed `~/.local/state/noctalia/settings.toml` overrides them. An older state file can override this repository's settings, including bar and monitor settings. Back it up before resetting it, and don't delete it without checking:
 
-```sh
+```fish
 mkdir -p "$HOME/noctalia-state-backup"
-cp -a "$HOME/.local/state/noctalia/." "$HOME/noctalia-state-backup/" 2>/dev/null || true
+if test -d "$HOME/.local/state/noctalia"
+  cp -a "$HOME/.local/state/noctalia/." "$HOME/noctalia-state-backup/"
+end
 noctalia config validate "$HOME/.config/noctalia/config.toml"
 noctalia config export > "$HOME/noctalia-effective-user-config.toml"
 ```
@@ -146,7 +151,7 @@ Inspect the state overrides and use Settings to change them. If you deliberately
 
 Useful checks:
 
-```sh
+```fish
 Hyprland --version
 Hyprland --verify-config --config "$HOME/.config/hypr/hyprland.lua"
 hyprctl reload
