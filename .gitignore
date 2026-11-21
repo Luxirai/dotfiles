@@ -21,3 +21,7 @@ zsh/*.local.zsh
 
 # Don't track editor/tool backup files
 kitty/*.bak
+
+!README.md
+!docs/
+!docs/**

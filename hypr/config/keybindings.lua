@@ -1,6 +1,6 @@
 local terminal = "kitty"
 local fileManager = "thunar"
-local ipc = "/home/h4ni0/.local/bin/noctalia msg "
+local ipc = "noctalia msg "
 local mod = "SUPER"
 local modShift = "SUPER + SHIFT"
 
@@ -32,7 +32,6 @@ hl.bind(mod .. " + O", hl.dsp.exec_cmd("obsidian"))
 -- General
 hl.bind(mod .. " + Q", hl.dsp.window.close())
 hl.bind(modShift .. " + Q", hl.dsp.window.kill())
-hl.bind(mod .. " + W", hl.dsp.window.close({ window = "" }))
 hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mod .. " + M", hl.dsp.exec_cmd(ipc .. "panel-toggle session"))
 hl.bind(mod .. " + E", hl.dsp.exec_cmd(fileManager))
@@ -42,22 +41,6 @@ hl.bind(mod .. " + Space", hl.dsp.exec_cmd(ipc .. "panel-toggle launcher"))
 hl.bind(mod .. " + P", hl.dsp.window.pseudo()) -- dwindle
 hl.bind(mod .. " + t", hl.dsp.layout("togglesplit")) -- dwindle
 hl.bind(mod .. " + F4", hl.dsp.exec_cmd(ipc .. "session lock-and-suspend"))
-hl.bind(modShift .. " + equal", function()
-    hl.monitor({
-        output = "DP-2",
-        mode = "3840x2160@60",
-        position = "0x0",
-        scale = 2.5,
-    })
-end)
-hl.bind(modShift .. " + minus", function()
-    hl.monitor({
-        output = "DP-2",
-        mode = "3840x2160@60",
-        position = "0x0",
-        scale = 2,
-    })
-end)
 hl.bind(modShift .. " + Space", hl.dsp.exec_cmd(ipc .. "screenshot-region"))
 hl.bind(modShift .. " + CTRL + Space", hl.dsp.exec_cmd("hyprshot -m window --clipboard-only"))
 hl.bind(modShift .. " + BackSpace", hl.dsp.exec_cmd(ipc .. "bar-toggle"))
@@ -102,11 +85,11 @@ end
 hl.bind(mod .. " + C", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mod .. " + SHIFT + C", hl.dsp.window.move({ workspace = "special:magic" }))
 
-hl.bind(mod .. " + mouse_right", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mod .. " + mouse_left", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
-hl.bind(mod .. " + mouse:272", hl.dsp.window.drag())
-hl.bind(mod .. " + mouse:273", hl.dsp.window.resize())
+hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Audio
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. "volume-up"), { repeating = true, locked = true })

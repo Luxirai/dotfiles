@@ -6,42 +6,9 @@ enable_overdrive = false
 enable_sounds = false
 
 [bar]
-order = [ "main", "main-pilled" ]
+order = [ "main" ]
 
     [bar.main]
-    background_opacity = 0.90000000000000002
-    capsule = false
-    center = [ "clock_start", "clock", "clock_end" ]
-    enabled = true
-    end = [
-        "privacy",
-        "tray",
-        "keyboard_layout",
-        "separator",
-        "net-down",
-        "separator",
-        "volume",
-        "separator",
-        "cpu",
-        "separator",
-        "ram",
-        "separator",
-        "temp"
-    ]
-    font_family = "JetBrainsMono NF"
-    margin_edge = 5
-    margin_ends = 10
-    padding = 15
-    position = "top"
-    radius = 8
-    reserve_space = true
-    scale = 1.1000000089406967
-    shadow = false
-    start = [ "workspaces" ]
-    thickness = 40
-    widget_spacing = 10
-
-    [bar.main-pilled]
     background_opacity = 0.90000000000000002
     capsule = false
     center = [ "clock_start", "clock", "clock_end" ]
@@ -104,22 +71,6 @@ type = "system"
 
 [desktop_widgets]
 enabled = false
-schema_version = 2
-widget_order = [ "desktop-widget-0000000000000001" ]
-
-    [desktop_widgets.grid]
-    cell_size = 16
-    major_interval = 4
-    visible = true
-
-    [desktop_widgets.widget.desktop-widget-0000000000000001]
-    box_height = 144.0
-    box_width = 384.0
-    cx = 208.0
-    cy = 132.0
-    output = "DP-2"
-    rotation = 0.0
-    type = "clock"
 
 [dock]
 enabled = false
@@ -145,65 +96,6 @@ auto_locate = true
 allow_empty_password = false
 enabled = true
 fingerprint = false
-
-[lockscreen_widgets]
-schema_version = 2
-widget_order = [ "lockscreen-login-box@DP-2", "lockscreen-login-box@HDMI-A-3" ]
-
-    [lockscreen_widgets.grid]
-    cell_size = 16
-    major_interval = 4
-    visible = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
-    box_height = 196.0
-    box_width = 810.0
-    cx = 960.0
-    cy = 898.0
-    output = "DP-2"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        layout = "regular"
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_media = true
-        show_session_buttons = true
-        show_unlock_hint = true
-        show_weather = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-3"]
-    box_height = 196.0
-    box_width = 810.0
-    cx = 960.0
-    cy = 898.0
-    output = "HDMI-A-3"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-3".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        layout = "regular"
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_media = true
-        show_session_buttons = true
-        show_unlock_hint = true
-        show_weather = true
 
 [nightlight]
 enabled = false
@@ -311,23 +203,10 @@ wallpaper_scheme = "m3-rainbow"
     enable_community_templates = true
 
 [wallpaper]
-directory = "/home/h4ni0/Downloads"
 enabled = true
 
     [wallpaper.automation]
     enabled = false
-
-    [wallpaper.default]
-    path = "/home/h4ni0/Downloads/wallhaven-l8dmkr.png"
-
-    [wallpaper.last]
-    path = "/home/h4ni0/Downloads/wallhaven-l8dmkr.png"
-
-    [wallpaper.monitors.DP-2]
-    path = "/home/h4ni0/Downloads/wallhaven-l8dmkr.png"
-
-    [wallpaper.monitors.HDMI-A-3]
-    path = "/home/h4ni0/Downloads/wallhaven-l8dmkr.png"
 
 [weather]
 enabled = true

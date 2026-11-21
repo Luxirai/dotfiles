@@ -35,7 +35,7 @@ function archive_folder() {
     return 1
   fi
 
-  sudo tar -cvpzf "$2.tar.xz" "$1"
+  sudo tar -cvpJf "$2.tar.xz" "$1"
 }
 
 unarchive_folder() {
