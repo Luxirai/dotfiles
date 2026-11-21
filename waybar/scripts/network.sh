@@ -1,5 +1,5 @@
 #!/bin/bash
-CACHE="/tmp/.waybar_net_cache"
+CACHE_DIR="${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}"
 
 format_rate() {
     local bytes=$1
@@ -36,27 +36,25 @@ if [[ -z "$iface" ]]; then
     exit 0
 fi
 
-now=$(date +%s%N)
+CACHE="$CACHE_DIR/waybar-net-${UID}-${iface}"
+now=$(date +%s)
 read -r rx_now < "/sys/class/net/$iface/statistics/rx_bytes"
 read -r tx_now < "/sys/class/net/$iface/statistics/tx_bytes"
 
 rx_rate=0
 tx_rate=0
 
-if [[ -f "$CACHE" ]]; then
+if [[ -r "$CACHE" ]]; then
     read -r prev_time prev_rx prev_tx < "$CACHE"
-    elapsed_ns=$(( now - prev_time ))
-    if (( elapsed_ns > 0 )); then
-        elapsed_s=$(echo "scale=9; $elapsed_ns / 1000000000" | bc)
-        rx_rate=$(echo "($rx_now - $prev_rx) / $elapsed_s" | bc 2>/dev/null)
-        tx_rate=$(echo "($tx_now - $prev_tx) / $elapsed_s" | bc 2>/dev/null)
+    if [[ $prev_time =~ ^[0-9]+$ && $prev_rx =~ ^[0-9]+$ && $prev_tx =~ ^[0-9]+$ ]]; then
+        elapsed=$((now - prev_time))
+        if (( elapsed > 0 )); then
+            (( rx_now >= prev_rx )) && rx_rate=$(( (rx_now - prev_rx) / elapsed ))
+            (( tx_now >= prev_tx )) && tx_rate=$(( (tx_now - prev_tx) / elapsed ))
+        fi
     fi
 fi
-
-echo "$now $rx_now $tx_now" > "$CACHE"
-
-(( rx_rate < 0 )) && rx_rate=0
-(( tx_rate < 0 )) && tx_rate=0
+printf '%s %s %s\n' "$now" "$rx_now" "$tx_now" > "$CACHE"
 
 up=$(format_rate "$tx_rate")
 down=$(format_rate "$rx_rate")
